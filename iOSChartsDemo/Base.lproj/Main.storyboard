@@ -37,6 +37,9 @@
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <connections>
+                        <outlet property="projectionChartView" destination="i9w-nN-ViB" id="PHl-NV-xGG"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k7O-8T-RV3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
