@@ -19,16 +19,28 @@
                         <viewControllerLayoutGuide type="top" id="ykR-ch-J8r"/>
                         <viewControllerLayoutGuide type="bottom" id="6YL-Dc-lJs"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" misplaced="YES" id="xB9-2e-b9k">
+                    <view key="view" contentMode="scaleToFill" id="xB9-2e-b9k">
                         <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i9w-nN-ViB" customClass="LineChartView" customModule="Charts">
+                                <rect key="frame" x="0.0" y="82" width="375" height="353"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="i9w-nN-ViB" firstAttribute="top" secondItem="ykR-ch-J8r" secondAttribute="bottom" id="6K5-ka-yH8"/>
+                            <constraint firstItem="i9w-nN-ViB" firstAttribute="leading" secondItem="xB9-2e-b9k" secondAttribute="leading" id="7P5-7i-kDH"/>
+                            <constraint firstAttribute="trailing" secondItem="i9w-nN-ViB" secondAttribute="trailing" id="9AG-uf-4Tq"/>
+                            <constraint firstItem="6YL-Dc-lJs" firstAttribute="top" secondItem="i9w-nN-ViB" secondAttribute="bottom" id="pzF-ki-cdH"/>
+                        </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k7O-8T-RV3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1768" y="110"/>
+            <point key="canvasLocation" x="1767.2" y="109.29535232383809"/>
         </scene>
         <!--Bar Chart View Controller-->
         <scene sceneID="tne-QT-ifu">
