@@ -50,21 +50,33 @@ class Projection{
     }
     
     func generateSplitBand() -> Band{
-        var band = Band()
-        var chanceOfSucess = getChanceOfSuccess()
-        //var nearestProjectionBand =
+        let band = Band()
+        let chanceOfSucess = getChanceOfSuccess()
+        let nearestProjectionBand = findNearesNumber(defaultProjection: DEFAULT_PROJECTION, number: chanceOfSucess)
+        let bandIndex = DEFAULT_PROJECTION.index(of: nearestProjectionBand)
+        let lowBand = bands?[bandIndex!]
+        let highBand = bands?[bandIndex!+1]
+        var value = [Float]()
+        for i in 0..<(lowBand?.value?.count)!{
+            let lowValue = lowBand?.value?[i]
+            let highValue = highBand?.value?[i]
+            let diff = (lowValue! + highValue!) / 2
+            value.append(diff)
+        }
+        band.percentile = 100 - getChanceOfSuccess()
+        band.value = value
         return band
     }
     
     func findNearesNumber(defaultProjection:[Int], number: Int) -> Int{
         var differenceList = [Int]()
         for i in 0..<defaultProjection.count{
-            var diff = abs(defaultProjection[i] - number)
+            let diff = abs(defaultProjection[i] - number)
             differenceList.append(diff)
         }
-        var minDiff = differenceList.min()
-        var closestIndex = differenceList.index(of: minDiff)
-        return defaultProjection[closestIndex]
+        let minDiff = differenceList.min()
+        let closestIndex = differenceList.index(of: minDiff!)
+        return defaultProjection[closestIndex!]
     }
     
 }
