@@ -20,14 +20,13 @@ class Projection{
     let DEFAULT_PROJECTION = [95, 90, 70, 50, 30, 10, 5]
     let DEFAULT_PROJECTION_QUERY = "95,90,70,50,30,10,5"
     
-    var startYear : Int?
-    
+    public var startYear : Int?
     //List of bands
-    var bands : [Band]?
-    var targetAnnualIncome : Int?
-    var targetMonthlyIncome: Int?
-    var targetLumpSum: Int?
-    var chanceOfSuccess: Float?
+    public var bands : [Band]?
+    public var targetAnnualIncome : Int?
+    public var targetMonthlyIncome: Int?
+    public var targetLumpSum: Int?
+    public var chanceOfSuccess: Float?
     var splitBand: Band?
     
     public func getChanceOfSuccess() -> Int {
@@ -82,10 +81,100 @@ class Projection{
 }
 
 class Band {
-    var percentile :Int?
-    var value : [Float]?
+    public var percentile :Int?
+    public var value : [Float]?
 }
 
 class Goal{
+    public var id : Int?
+    public var type: GoalType?
+    public var name: String?
+    public var associatedAccount: String?
+    public var timeHorizon: Int?
+    public var initialInvestmentAmount: Int?
+    public var significantWithdrawalsBeforeTargetDate: Bool?
+    public var informationAccuracyAck: Bool?
+    public var overallRiskTolerance: Int?
+    public var monthlyDeposit: Int?
+    public var liquidNetWorth: Int?
+    public var target: Target?
+    public var monthsOfEmergencyFunds: Int?
+    public var incomeRange: String?
+    public var employmentStatus: String?
     
+    enum GoalType : String{
+        case Retirement = "Retirement"
+        case Wealth = "Wealth"
+        case Education = "Education"
+        case Other = "Other"
+    }
+    
+    class Target {
+        public var targetType: TargetType?
+        var value: Int?
+        var targetDate: String?
+        var yearsForMoneyToLast: Int?
+        
+        public func getYearsForMoneyToLast() -> Int{
+            //add null check
+            return yearsForMoneyToLast!
+        }
+        
+        public func getDate() -> Date {
+            return DateFormatter().date(from: targetDate!)!
+        }
+        
+        public func getYearsToGoal() -> Int {
+            //need to verify that this calculation is accurate
+            let dateTarget = getDate()
+            let dateCurrent = Date()
+            let calendar = Calendar.current
+            let yearTarget = calendar.component(.year, from: dateTarget)
+            let yearCurrent = calendar.component(.year, from: dateCurrent)
+            return yearTarget-yearCurrent
+        }
+        
+        public func getTargetType() -> String {
+                if (targetType?.rawValue == "Monthly"){
+                    return "monthly"
+                }
+                if (targetType?.rawValue == "Annual"){
+                    return "annual"
+                }
+                if (targetType?.rawValue == "LumpSum"){
+                    return "lump-sum"
+                }
+                return ""
+        }
+        
+        public func getTargetTypeInterval() -> String{
+            if (targetType?.rawValue == "Monthly"){
+                return "month"
+            } else if (targetType?.rawValue == "Annual"){
+                return "year"
+            } else {
+                return ""
+            }
+        }
+        
+        public func getTargetAmount() -> String {
+            //format value as currency String
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .currency
+            return formatter.string(from: value! as NSNumber)!
+        }
+        
+        public func getTargetValue() -> Int {
+            return value!
+        }
+        
+        enum TargetType: String {
+            case Monthly = "Monthly"
+            case Annual = "Annual"
+            case LumpSum = "LumpSum"
+        }
+    }
 }
+
+
+
