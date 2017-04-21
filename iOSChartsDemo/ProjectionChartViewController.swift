@@ -49,7 +49,7 @@ class ProjectionChartViewController: UIViewController {
             set.highlightEnabled = false
             if(b == (projection.bands?.count)!-1){
                 set.drawFilledEnabled = true
-                set.fillColor = chanceOfSuccess <= 5 && chanceOfSuccess > 0 ? NSUIColor.lightGray : NSUIColor.green
+                set.fillColor = chanceOfSuccess <= 5 && chanceOfSuccess > 0 ? NSUIColor(colorLiteralRed: 216/255, green: 216/255, blue: 216/255, alpha: 255/255) : NSUIColor(colorLiteralRed: 80/255, green: 185/255, blue: 72/255, alpha: 255/255)
                 set.fillAlpha = 255
             } else if (b == 0){
                 set.drawFilledEnabled = true
@@ -100,7 +100,7 @@ class ProjectionChartViewController: UIViewController {
         set.drawValuesEnabled = false
         set.setColor(NSUIColor.clear)
         set.drawCirclesEnabled = false
-        set.fillColor = NSUIColor.lightGray
+        set.fillColor = NSUIColor(colorLiteralRed: 216/255, green: 216/255, blue: 216/255, alpha: 255/255)
         set.fillAlpha = 255
         return set
     }

@@ -24,16 +24,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i9w-nN-ViB" customClass="LineChartView" customModule="Charts">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="130" width="375" height="318"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="i9w-nN-ViB" firstAttribute="top" secondItem="ykR-ch-J8r" secondAttribute="bottom" id="6K5-ka-yH8"/>
-                            <constraint firstItem="i9w-nN-ViB" firstAttribute="leading" secondItem="xB9-2e-b9k" secondAttribute="leading" id="7P5-7i-kDH"/>
-                            <constraint firstAttribute="trailing" secondItem="i9w-nN-ViB" secondAttribute="trailing" id="9AG-uf-4Tq"/>
-                            <constraint firstItem="6YL-Dc-lJs" firstAttribute="top" secondItem="i9w-nN-ViB" secondAttribute="bottom" id="pzF-ki-cdH"/>
+                            <constraint firstItem="i9w-nN-ViB" firstAttribute="leading" secondItem="xB9-2e-b9k" secondAttribute="leading" id="0O8-HO-vZ6"/>
+                            <constraint firstItem="6YL-Dc-lJs" firstAttribute="top" secondItem="i9w-nN-ViB" secondAttribute="bottom" constant="155" id="5iF-7T-a9h"/>
+                            <constraint firstItem="i9w-nN-ViB" firstAttribute="top" secondItem="ykR-ch-J8r" secondAttribute="bottom" constant="130" id="B4k-Oe-o68"/>
+                            <constraint firstAttribute="trailing" secondItem="i9w-nN-ViB" secondAttribute="trailing" id="ulc-ua-LBf"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
