@@ -9,8 +9,103 @@ class ProjectionChartViewController: UIViewController {
     var projectionString : String?
     
     func setProjectionChart(projection: Projection, goal: Goal){
+        let target = goal.target
         
+        //I think there has to be a better way to do this, not using optionals correctly
+        let hasTarget = goal.hasTarget() && projection.chanceOfSuccess?.hashValue != nil
+        let chanceOfSuccess = hasTarget ? projection.getChanceOfSuccess() : -1
         
+        var dataSets = [LineChartDataSet]()
+        //var projectionLabels = ..........
+        var yearsToGoal = target?.getYearsToGoal()
+        
+        for b in 0...projection.bands!.count{
+            let band = projection.bands![b]
+            let entries = buildProjectionBand(band: band, yearsToGoal: yearsToGoal!)
+            //projectionLabels[b] = entires.....
+            let set = LineChartDataSet(values: entries, label: String(band.percentile!) + "Percentile")
+            
+            //need to make this work
+            //set.axisDependency(YAxis.AxisDependency.right)
+            
+            set.setColor(NSUIColor.white)
+            set.drawCirclesEnabled = false
+            set.lineWidth = 1
+            set.drawValuesEnabled = false
+            set.highlightEnabled = false
+            if(b == (projection.bands?.count)!-1){
+                set.drawFilledEnabled = true
+                set.fillColor = chanceOfSuccess <= 5 && chanceOfSuccess > 0 ? NSUIColor.gray : NSUIColor.green
+                set.fillAlpha = 255
+            } else if (b == 0){
+                set.drawFilledEnabled = true
+                set.fillColor = NSUIColor.white
+                set.fillAlpha = 255
+            }
+            //prepend the sets
+            dataSets.insert(set, at: 0)
+        }
+        
+        if (chanceOfSuccess < 95 && chanceOfSuccess > 5){
+            let splitBand = buildSplitBand(band: projection.getSplitBand(), yearsToGoal: yearsToGoal!)
+            splitBand.highlightEnabled = false
+            //add split band at index 1
+            dataSets.insert(splitBand, at: 1)
+        }
+        var highlight = Highlight(x: 0, y: 0, dataSetIndex: 0)
+        
+        if (hasTarget){
+            var targetEntry = [ChartDataEntry]()
+            let targetValue = Float(projection.targetLumpSum!)
+            let targetYear = Calendar.current.component(.year, from: (target?.getDate())!)
+            targetEntry.append(ChartDataEntry(x: Double(targetYear)
+                , y: Double(targetValue)))
+            let targetDataSet = LineChartDataSet(values: targetEntry, label: "target")
+            targetDataSet.drawFilledEnabled = false
+            targetDataSet.drawCirclesEnabled = false
+            targetDataSet.drawValuesEnabled = false
+            targetDataSet.highlightEnabled = true
+            //targetDataSet.axisDependency....
+            targetDataSet.setDrawHighlightIndicators(false)
+            dataSets.append(targetDataSet)
+            highlight = Highlight(x: Double(targetYear), y: Double(targetValue), dataSetIndex: dataSets.index(of: targetDataSet)!)
+        }
+        
+        let projectionData = ChartData(dataSets: dataSets)
+        
+        projectionChartView.data = projectionData
+    }
+    
+    func buildSplitBand(band: Band, yearsToGoal: Int) -> LineChartDataSet{
+        let set = LineChartDataSet(values: buildProjectionBand(band: band, yearsToGoal: yearsToGoal), label: "Split")
+        //set.axisDependency
+        set.drawFilledEnabled = true
+        set.drawValuesEnabled = false
+        set.setColor(NSUIColor.clear)
+        set.drawCirclesEnabled = false
+        set.fillColor = NSUIColor.gray
+        set.fillAlpha = 255
+        return set
+    }
+    
+    
+    
+    //Function that builds a projection Band (several of these make up the graph I guess
+    func buildProjectionBand(band: Band, yearsToGoal: Int) -> [ChartDataEntry]{
+        var entries = [ChartDataEntry]()
+        for i in 0...yearsToGoal{
+            let value = band.value?[i]
+            
+            //get years
+            let date = Date()
+            let cal = Calendar.current
+            let years = cal.component(.year, from: date) + i
+            
+            //create entry
+            let entry = ChartDataEntry(x: Double(years), y: Double(value!))
+            entries.append(entry)
+        }
+        return entries
     }
     
     override func viewDidLoad() {
@@ -18,9 +113,26 @@ class ProjectionChartViewController: UIViewController {
         
         projectionString = "{\"targetAnnualIncome\":null,\"startYear\":2016,\"isCurrentDollars\":true,\"bands\":[{\"percentile\":5,\"value\":[21223.071,21240.326571,20556.741981,21794.030241,22371.650895,22729.501234,23799.499513,23067.337084,24501.951792,25265.684211,26683.946455,26643.735893,26332.375831,29401.373277,30630.24683,32305.639077,32572.051165,32913.046886,36413.65465,37738.824872,39749.523055,41191.361405,41565.671905,43909.532747,44850.440552,46567.89654,47886.586539,47147.180357,0.0]},{\"percentile\":30,\"value\":[25256.45925,26222.428279,27617.450431,29351.831725,31114.914454,32480.694073,33983.122832,36130.967598,38133.663583,40148.904567,43259.178595,45379.51216,46719.16989,49634.935014,51433.145012,54839.971431,58427.050807,61567.505169,65432.451111,70502.111229,75014.496307,76880.101335,79533.171057,84213.342872,90012.150065,95821.632859,102856.272249,106957.519343,0.0]},{\"percentile\":50,\"value\":[26761.47325,28902.325185,31457.984437,33832.546863,35710.206463,38090.857872,40082.582694,43138.127444,44948.549802,47815.376304,53065.276308,56996.387252,59918.480504,64272.936456,66700.962056,69363.425749,73595.917583,78627.723103,84623.68198,90473.558356,95000.567228,102681.521907,105738.048873,112967.830457,117637.264195,123675.013215,131002.44484,141140.801294,0.0]},{\"percentile\":70,\"value\":[28593.2535,31525.034422,34865.474082,38191.999438,41204.684108,44429.715231,48618.349901,51599.865044,55243.340398,59903.057595,63257.952105,68744.909923,74630.94953,79429.404683,84787.245052,89183.455399,96141.78855,105148.214452,113810.916986,118704.942888,126365.95237,130752.713211,135457.911666,142439.158689,154635.136871,170200.815315,178851.222955,189138.051419,35369.950914]},{\"percentile\":90,\"value\":[31219.53925,34810.701518,39878.564684,45093.695967,49127.959075,54715.501433,60610.173,67566.109309,72912.153104,78710.162807,86811.885866,91463.491776,101068.118838,110943.303886,125663.641797,133028.285078,140157.765426,151279.268943,159602.728984,170899.177534,187225.644715,192167.317931,209599.31803,226727.864363,248375.11369,264656.690651,278052.791607,306082.028793,161555.251931]},{\"percentile\":95,\"value\":[32339.319,37214.932394,43206.500875,48738.848734,53187.226764,61022.77589,68122.621101,76980.478987,82689.281467,93833.539008,101853.005098,106952.519446,118803.779646,127103.389403,142658.595778,148911.169626,159697.029163,179229.004515,187767.528965,200957.053636,211054.807043,230039.582222,258068.697346,278780.087046,310574.364388,326333.040525,353825.85326,359885.116668,221075.297922]}],\"targetLumpSum\":157000,\"targetMonthlyIncome\":null,\"chanceOfSuccess\":26.5}"
         
+        
+        
         let json = JSON(parseJSON: projectionString!)
         
         let projection = Projection.init(json: json)
+        
+        let target = Goal.Target()
+        target.targetDate = "2040-01-01"
+        target.value = 157144
+        target.targetType = Goal.Target.TargetType.LumpSum
+        target.yearsForMoneyToLast = 10
+        
+        let goal = Goal()
+        goal.associatedAccount = "201000028"
+        goal.initialInvestmentAmount = 1000
+        goal.type = Goal.GoalType.Retirement
+        goal.id = 16
+        goal.target = target
+        
+        setProjectionChart(projection: projection, goal: goal)
 
     }
 }
@@ -50,8 +162,15 @@ class Projection{
         
         //empty array of bands
         var actualBands = [Band]()
+        
+        //faster iteration
+//        for i in jsonArrayBands!{
+//            let band = Band.init(json: i)
+//            
+//            actualBands.append(band)
+//        }
 
-        //create list of bands - is there a better for loop?
+        //create list of bands
         for i in 0..<(jsonArrayBands?.count)!{
             //create actual band object
             let band = Band.init(json:jsonArrayBands?[i])
@@ -80,6 +199,8 @@ class Projection{
     }
     
     public func getSplitBand() -> Band {
+        
+        //need to fix this guy here or maybe I just neet to set it first?
         return splitBand!
     }
     
@@ -148,6 +269,13 @@ class Goal{
     public var incomeRange: String?
     public var employmentStatus: String?
     
+    public func hasTarget() -> Bool{
+        if(target?.targetType?.rawValue != nil && target?.value?.hashValue != nil){
+            return true
+        }
+        return false
+    }
+    
     enum GoalType : String{
         case Retirement = "Retirement"
         case Wealth = "Wealth"
@@ -167,7 +295,12 @@ class Goal{
         }
         
         public func getDate() -> Date {
-            return DateFormatter().date(from: targetDate!)!
+            
+            let dateFormatter = DateFormatter()
+            DateFormatter.dateFormat(fromTemplate: "yyyy", options: 0, locale: Locale.current)
+            let date = dateFormatter.date(from: targetDate!)
+            
+            return date!
         }
         
         public func getYearsToGoal() -> Int {
