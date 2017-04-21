@@ -9,6 +9,19 @@ class ProjectionChartViewController: UIViewController {
     var projectionString : String?
     
     func setProjectionChart(projection: Projection, goal: Goal){
+        
+        projectionChartView.setExtraOffsets(left: 0, top: 0, right: 18, bottom: 0)
+        projectionChartView.backgroundColor = UIColor.white
+        projectionChartView.drawGridBackgroundEnabled = false
+        projectionChartView.gridBackgroundColor = UIColor.white
+        let xAxis = projectionChartView.xAxis
+        xAxis.drawGridLinesEnabled = false
+        xAxis.valueFormatter = nil
+        
+        projectionChartView.rightAxis.drawGridLinesEnabled = false
+        projectionChartView.rightAxis.drawAxisLineEnabled = false
+        
+        
         let target = goal.target
         
         //I think there has to be a better way to do this, not using optionals correctly
@@ -19,7 +32,7 @@ class ProjectionChartViewController: UIViewController {
         //var projectionLabels = ..........
         var yearsToGoal = target?.getYearsToGoal()
         
-        for b in 0...projection.bands!.count{
+        for b in 0..<projection.bands!.count{
             let band = projection.bands![b]
             let entries = buildProjectionBand(band: band, yearsToGoal: yearsToGoal!)
             //projectionLabels[b] = entires.....
@@ -29,20 +42,21 @@ class ProjectionChartViewController: UIViewController {
             //set.axisDependency(YAxis.AxisDependency.right)
             
             set.setColor(NSUIColor.white)
+        
             set.drawCirclesEnabled = false
             set.lineWidth = 1
             set.drawValuesEnabled = false
             set.highlightEnabled = false
             if(b == (projection.bands?.count)!-1){
                 set.drawFilledEnabled = true
-                set.fillColor = chanceOfSuccess <= 5 && chanceOfSuccess > 0 ? NSUIColor.gray : NSUIColor.green
+                set.fillColor = chanceOfSuccess <= 5 && chanceOfSuccess > 0 ? NSUIColor.lightGray : NSUIColor.green
                 set.fillAlpha = 255
             } else if (b == 0){
                 set.drawFilledEnabled = true
                 set.fillColor = NSUIColor.white
                 set.fillAlpha = 255
             }
-            //prepend the sets
+
             dataSets.insert(set, at: 0)
         }
         
@@ -71,9 +85,12 @@ class ProjectionChartViewController: UIViewController {
             highlight = Highlight(x: Double(targetYear), y: Double(targetValue), dataSetIndex: dataSets.index(of: targetDataSet)!)
         }
         
-        let projectionData = ChartData(dataSets: dataSets)
+        let projectionData = LineChartData(dataSets: dataSets)
         
         projectionChartView.data = projectionData
+        
+        //I think this is to render the labels
+        //projectionChartView.rightYAxisRenderer
     }
     
     func buildSplitBand(band: Band, yearsToGoal: Int) -> LineChartDataSet{
@@ -83,7 +100,7 @@ class ProjectionChartViewController: UIViewController {
         set.drawValuesEnabled = false
         set.setColor(NSUIColor.clear)
         set.drawCirclesEnabled = false
-        set.fillColor = NSUIColor.gray
+        set.fillColor = NSUIColor.lightGray
         set.fillAlpha = 255
         return set
     }
@@ -95,7 +112,7 @@ class ProjectionChartViewController: UIViewController {
         var entries = [ChartDataEntry]()
         for i in 0...yearsToGoal{
             let value = band.value?[i]
-            
+        
             //get years
             let date = Date()
             let cal = Calendar.current
@@ -104,6 +121,7 @@ class ProjectionChartViewController: UIViewController {
             //create entry
             let entry = ChartDataEntry(x: Double(years), y: Double(value!))
             entries.append(entry)
+            print("band: \(band.percentile) | x: \(entry.x) | y: \(entry.y)")
         }
         return entries
     }
@@ -201,7 +219,7 @@ class Projection{
     public func getSplitBand() -> Band {
         
         //need to fix this guy here or maybe I just neet to set it first?
-        return splitBand!
+        return generateSplitBand()
     }
     
     public func setSplitBand(band: Band){
@@ -297,7 +315,7 @@ class Goal{
         public func getDate() -> Date {
             
             let dateFormatter = DateFormatter()
-            DateFormatter.dateFormat(fromTemplate: "yyyy", options: 0, locale: Locale.current)
+            dateFormatter.dateFormat = "yyyy-MM-dd"
             let date = dateFormatter.date(from: targetDate!)
             
             return date!

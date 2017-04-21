@@ -30,6 +30,7 @@ class BarChartViewController: UIViewController {
         
         //Build Data Set
         let chartDataSet = BarChartDataSet(values: dataEntries, label: "Units Sold")
+        chartDataSet.setColor(NSUIColor.green)
         
         //Build Data
         let chartData = BarChartData(dataSet: chartDataSet)
