@@ -14,12 +14,23 @@ class ProjectionChartViewController: UIViewController {
         projectionChartView.backgroundColor = UIColor.white
         projectionChartView.drawGridBackgroundEnabled = false
         projectionChartView.gridBackgroundColor = UIColor.white
+        
         let xAxis = projectionChartView.xAxis
         xAxis.drawGridLinesEnabled = false
         xAxis.valueFormatter = nil
         
+        //set axis position
+        xAxis.labelPosition = XAxis.LabelPosition.bottom
+        
+        
         projectionChartView.rightAxis.drawGridLinesEnabled = false
         projectionChartView.rightAxis.drawAxisLineEnabled = false
+        
+        projectionChartView.leftAxis.drawGridLinesEnabled = false
+        projectionChartView.leftAxis.drawLabelsEnabled = false
+        projectionChartView.leftAxis.drawAxisLineEnabled = false
+        
+        projectionChartView.chartDescription?.text = ""
         
         
         let target = goal.target
@@ -140,7 +151,7 @@ class ProjectionChartViewController: UIViewController {
         
         let target = Goal.Target()
         target.targetDate = "2040-01-01"
-        target.value = 157144
+        target.value = 100144
         target.targetType = Goal.Target.TargetType.LumpSum
         target.yearsForMoneyToLast = 10
         
