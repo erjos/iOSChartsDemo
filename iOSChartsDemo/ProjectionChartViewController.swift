@@ -8,6 +8,46 @@ class ProjectionChartViewController: UIViewController {
     
     var projectionString : String?
     
+    class ProjectionLabelFormatter: DefaultAxisValueFormatter {
+        
+        //var asd = Projection.getDefaultProjection
+        
+        public var DEFAULT_PROJECTION = [95, 90, 70, 50, 30, 10, 5]
+        
+        var mProjectionLabels : [Float]
+        
+        private var isShowingPercentAmount = false
+        
+        public init(mProjectionLabels : [Float]){
+            self.mProjectionLabels = mProjectionLabels
+            super.init()
+        }
+        
+        public func setIsShowingPercentAmount(isShowingPercentAmount: Bool){
+            self.isShowingPercentAmount = isShowingPercentAmount
+        }
+        
+        override func stringForValue(_ value: Double, axis: AxisBase?) -> String {
+            
+            //for now commenting this out so always show percent amount
+            //if(isShowingPercentAmount){
+                var index = 0
+                for i in 0..<mProjectionLabels.count{
+                    let floatVal = mProjectionLabels[i]
+                    if (floatVal == Float(value)){
+                        index = i
+                        break
+                    }
+                }
+                
+                return String(format: "%s%%", DEFAULT_PROJECTION[index])
+//            }else{
+//                return String(format: "$%s", <#T##arguments: CVarArg...##CVarArg#>)
+//            }
+        }
+    }
+
+    
     func setProjectionChart(projection: Projection, goal: Goal){
         
         projectionChartView.setExtraOffsets(left: 0, top: 0, right: 18, bottom: 0)
@@ -31,6 +71,8 @@ class ProjectionChartViewController: UIViewController {
         projectionChartView.leftAxis.drawAxisLineEnabled = false
         
         projectionChartView.chartDescription?.text = ""
+        projectionChartView.legend.enabled = false
+        projectionChartView.doubleTapToZoomEnabled = false
         
         
         let target = goal.target
@@ -40,17 +82,25 @@ class ProjectionChartViewController: UIViewController {
         let chanceOfSuccess = hasTarget ? projection.getChanceOfSuccess() : -1
         
         var dataSets = [LineChartDataSet]()
-        //var projectionLabels = ..........
+       
+        //labels
+        var projectionLabels = [Float].init(repeating: 0, count: (projection.bands?.count)!)
+        
+        
         var yearsToGoal = target?.getYearsToGoal()
         
         for b in 0..<projection.bands!.count{
             let band = projection.bands![b]
             let entries = buildProjectionBand(band: band, yearsToGoal: yearsToGoal!)
-            //projectionLabels[b] = entires.....
+            
+            //labels
+            projectionLabels[b] = Float(entries[entries.count - 1].y)
+            
             let set = LineChartDataSet(values: entries, label: String(band.percentile!) + "Percentile")
             
-            //need to make this work
-            //set.axisDependency(YAxis.AxisDependency.right)
+            // labels - uncommenting the below code makes the target and split band highlighting look different
+            //will need to investigate exactly what's causing this
+            //set.axisDependency = YAxis.AxisDependency.right
             
             set.setColor(NSUIColor.white)
         
@@ -90,10 +140,17 @@ class ProjectionChartViewController: UIViewController {
             targetDataSet.drawCirclesEnabled = false
             targetDataSet.drawValuesEnabled = false
             targetDataSet.highlightEnabled = true
-            //targetDataSet.axisDependency....
+            
+            //labels
+            //targetDataSet.axisDependency = YAxis.AxisDependency.right
+
             targetDataSet.setDrawHighlightIndicators(false)
             dataSets.append(targetDataSet)
             highlight = Highlight(x: Double(targetYear), y: Double(targetValue), dataSetIndex: dataSets.index(of: targetDataSet)!)
+            
+            
+            //labels
+            //projectionChartView.rightYAxisRenderer = LabelRender -> need to create a new class that extends YAxisRenderer
         }
         
         let projectionData = LineChartData(dataSets: dataSets)
@@ -169,7 +226,8 @@ class ProjectionChartViewController: UIViewController {
 
 class Projection{
     
-    let DEFAULT_PROJECTION = [95, 90, 70, 50, 30, 10, 5]
+    public var DEFAULT_PROJECTION = [95, 90, 70, 50, 30, 10, 5]
+    
     let DEFAULT_PROJECTION_QUERY = "95,90,70,50,30,10,5"
     
     public var startYear : Int?
@@ -238,6 +296,10 @@ class Projection{
         splitBand = band
     }
     
+    public func getDefaultProjection() -> [Int]{
+        return self.DEFAULT_PROJECTION
+    }
+    
     func generateSplitBand() -> Band{
         let band = Band()
         let chanceOfSucess = getChanceOfSuccess()
@@ -267,8 +329,9 @@ class Projection{
         let closestIndex = differenceList.index(of: minDiff!)
         return defaultProjection[closestIndex!]
     }
-    
 }
+
+//in original example this implemented the IAxisValueFormatter protocol, but I wasn't able to get it to work
 
 class Band {
     public var percentile :Int?
