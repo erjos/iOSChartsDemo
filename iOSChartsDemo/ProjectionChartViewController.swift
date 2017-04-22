@@ -88,7 +88,7 @@ class ProjectionChartViewController: UIViewController {
         let projectionData = LineChartData(dataSets: dataSets)
         
         projectionChartView.data = projectionData
-        projectionChartView.animate(xAxisDuration: 1, yAxisDuration: 1, easingOption: ChartEasingOption.easeInSine)
+        projectionChartView.animate(xAxisDuration: 1.5, yAxisDuration: 1.5, easingOption: ChartEasingOption.easeInSine)
         
         //I think this is to render the labels
         //projectionChartView.rightYAxisRenderer
