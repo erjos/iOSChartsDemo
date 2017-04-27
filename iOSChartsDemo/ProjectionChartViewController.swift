@@ -164,6 +164,8 @@ class ProjectionChartViewController: UIViewController {
         let yAxis = projectionChartView.getAxis(YAxis.AxisDependency.right)
         let transformer = projectionChartView.getTransformer(forAxis: YAxis.AxisDependency.right)
         
+        //projectionLabels
+        
         projectionChartView.rightYAxisRenderer = LabelRenderer(viewPortHandler: viewPortHandler, yAxis: yAxis, transformer: transformer)
     }
     

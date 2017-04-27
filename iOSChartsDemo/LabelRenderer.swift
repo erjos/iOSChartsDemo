@@ -13,9 +13,18 @@ import Charts
 //@objc(ChartYAxisRenderer)
 open class LabelRenderer: YAxisRenderer
 {
+    //private let entries : [Float]
+    
     public override init(viewPortHandler: ViewPortHandler?, yAxis: YAxis?, transformer: Transformer?)
     {
         super.init(viewPortHandler: viewPortHandler, yAxis: yAxis, transformer: transformer)
+    }
+    
+    override open func computeAxisValues(min: Double, max: Double) {
+        let axis = self.axis
+        //axis?.entries = entries
+        
+        //shouldn't need to set entry count since it returns from the entries
     }
     
     /// draws the y-axis labels to the screen
