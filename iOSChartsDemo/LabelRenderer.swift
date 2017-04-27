@@ -13,16 +13,17 @@ import Charts
 //@objc(ChartYAxisRenderer)
 open class LabelRenderer: YAxisRenderer
 {
-    //private let entries : [Float]
+    private let entries : [Double]
     
-    public override init(viewPortHandler: ViewPortHandler?, yAxis: YAxis?, transformer: Transformer?)
+    public init(viewPortHandler: ViewPortHandler?, yAxis: YAxis?, transformer: Transformer?, entries: [Double])
     {
+        self.entries = entries
         super.init(viewPortHandler: viewPortHandler, yAxis: yAxis, transformer: transformer)
     }
     
     override open func computeAxisValues(min: Double, max: Double) {
         let axis = self.axis
-        //axis?.entries = entries
+        axis?.entries = entries
         
         //shouldn't need to set entry count since it returns from the entries
     }
@@ -160,12 +161,12 @@ open class LabelRenderer: YAxisRenderer
             let size = CGSize(width: 50.0, height: 20.0)
             
             //there's this draw Image thing n b
-            ChartUtils.drawImage(context: context, image: image, x: fixedPosition + 25, y: positions[i].y + offset + 5, size: size)
+            ChartUtils.drawImage(context: context, image: image, x: fixedPosition + 25, y: (positions[i].y + offset)-5, size: size)
             
             ChartUtils.drawText(
                 context: context,
                 text: text,
-                point: CGPoint(x: fixedPosition + 10, y: positions[i].y + offset),
+                point: CGPoint(x: fixedPosition + 10, y: (positions[i].y) - 5),//+ offset),
                 align: textAlign,
                 attributes: [NSFontAttributeName: labelFont, NSForegroundColorAttributeName: labelTextColor])
         }

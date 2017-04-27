@@ -85,7 +85,7 @@ class ProjectionChartViewController: UIViewController {
         var dataSets = [LineChartDataSet]()
        
         //labels
-        var projectionLabels = [Float].init(repeating: 0, count: (projection.bands?.count)!)
+        var projectionLabels = [Double].init(repeating: 0, count: (projection.bands?.count)!)
         
         
         var yearsToGoal = target?.getYearsToGoal()
@@ -95,7 +95,7 @@ class ProjectionChartViewController: UIViewController {
             let entries = buildProjectionBand(band: band, yearsToGoal: yearsToGoal!)
             
             //labels
-            projectionLabels[b] = Float(entries[entries.count - 1].y)
+            projectionLabels[b] = (entries[entries.count - 1].y)
             
             let set = LineChartDataSet(values: entries, label: String(band.percentile!) + "Percentile")
             
@@ -166,7 +166,7 @@ class ProjectionChartViewController: UIViewController {
         
         //projectionLabels
         
-        projectionChartView.rightYAxisRenderer = LabelRenderer(viewPortHandler: viewPortHandler, yAxis: yAxis, transformer: transformer)
+        projectionChartView.rightYAxisRenderer = LabelRenderer(viewPortHandler: viewPortHandler, yAxis: yAxis, transformer: transformer, entries: projectionLabels)
     }
     
     func buildSplitBand(band: Band, yearsToGoal: Int) -> LineChartDataSet{
