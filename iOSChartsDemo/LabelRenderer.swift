@@ -21,6 +21,8 @@ open class LabelRenderer: YAxisRenderer
         super.init(viewPortHandler: viewPortHandler, yAxis: yAxis, transformer: transformer)
     }
     
+    
+    //this is called at some point to reassign positioning to the labels on the Y axis
     override open func computeAxisValues(min: Double, max: Double) {
         let axis = self.axis
         axis?.entries = entries
