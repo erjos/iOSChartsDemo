@@ -9,16 +9,16 @@ class ProjectionChartViewController: UIViewController {
     var projectionString : String?
     
     class TargetMarker : MarkerImage {
-        var targetLumpSum : Int
         
-        init(targetLumpSum: Int, chartView: LineChartView) {
-            self.targetLumpSum = targetLumpSum
+        init(chartView: LineChartView, trans: Transformer) {
             super.init()
-            self.image = #imageLiteral(resourceName: "TargetShadow")
-            //size = CGSize(width: 50, height: 50)
-            self.offset = CGPoint(x: 0 , y: 0)//gotta figure out how to get the xPosition that we're using in the label renderer here
-                //, y: Double(targetLumpSum))
             self.chartView = chartView
+            self.image = #imageLiteral(resourceName: "TargetShadow")
+            
+            //var testPoint = CGPoint(x:0, y: 0 - targetLumpSum)
+            
+            //self.offset = testPoint//gotta figure out how to get the xPosition that we're using in the label renderer here
+                //, y: Double(targetLumpSum))
         }
     }
     
@@ -183,10 +183,11 @@ class ProjectionChartViewController: UIViewController {
         projectionChartView.rightYAxisRenderer = LabelRenderer(viewPortHandler: viewPortHandler, yAxis: yAxis, transformer: transformer, entries: projectionLabels)
         
         let targetLumpSum = projection.targetLumpSum!
-        let targetMarker = TargetMarker(targetLumpSum: targetLumpSum, chartView: projectionChartView)
+        let targetMarker = TargetMarker(chartView: projectionChartView, trans: transformer)
         
         //set target marker
         projectionChartView.marker = targetMarker
+        
         projectionChartView.drawMarkers = true
         
         //makes marker visible without having to tap the chart
