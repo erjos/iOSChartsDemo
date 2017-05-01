@@ -15,10 +15,62 @@ class ProjectionChartViewController: UIViewController {
             self.chartView = chartView
             self.image = #imageLiteral(resourceName: "TargetShadow")
             
-            //var testPoint = CGPoint(x:0, y: 0 - targetLumpSum)
+            //6plus, 7plus, 6s
+            //self.offset = CGPoint(x: -20, y: -45)
             
-            //self.offset = testPoint//gotta figure out how to get the xPosition that we're using in the label renderer here
-                //, y: Double(targetLumpSum))
+            //
+        }
+        
+        override func offsetForDrawing(atPoint point: CGPoint) -> CGPoint {
+            var offset = self.offset
+            
+            let chart = self.chartView
+            
+            var size = self.size
+            
+            if size.width == 0.0 && image != nil
+            {
+                size.width = image?.size.width ?? 0.0
+            }
+            if size.height == 0.0 && image != nil
+            {
+                size.height = image?.size.height ?? 0.0
+            }
+            
+//            let chartWidth = chart?.bounds.size.width
+            let chartHeight = chart?.bounds.size.height
+            
+            //Checks the screensize and adjusts the offset accordingly, it appears as though the chart renders in two sizes depending on the device
+            if(Int(chartHeight!) < 220){
+                //6plus, 7plus, 6s
+                offset = CGPoint(x: -20, y: -35)
+            }else {
+                //SE, 5
+                offset = CGPoint(x: -20, y: -45)
+            }
+            
+            let width = size.width
+            let height = size.height
+            
+            if point.x + offset.x < 0.0
+            {
+                offset.x = -point.x
+            }
+            else if chart != nil && point.x + width + offset.x > chart!.bounds.size.width
+            {
+                offset.x = chart!.bounds.size.width - point.x - width
+            }
+            
+            if point.y + offset.y < 0
+            {
+                offset.y = -point.y
+            }
+            else if chart != nil && point.y + height + offset.y > chart!.bounds.size.height
+            {
+                offset.y = chart!.bounds.size.height - point.y - height
+            }
+            
+            return offset
         }
     }
     
@@ -34,6 +86,7 @@ class ProjectionChartViewController: UIViewController {
 //        
 //        private var isShowingPercentAmount = false
 //        
+    
 //        public init(mProjectionLabels : [Float]){
 //            self.mProjectionLabels = mProjectionLabels
 //            super.init()
@@ -192,9 +245,6 @@ class ProjectionChartViewController: UIViewController {
         
         //makes marker visible without having to tap the chart
         projectionChartView.highlightValue(highlight, callDelegate: false)
-        
-        
-        //new TargetMarker that takes in context and chance of sucess...
     }
     
     func buildSplitBand(band: Band, yearsToGoal: Int) -> LineChartDataSet{
