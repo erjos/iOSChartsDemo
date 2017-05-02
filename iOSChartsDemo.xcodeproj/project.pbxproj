@@ -22,6 +22,8 @@
 		866BFE111EA8F816002D079E /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 866BFE051EA8F604002D079E /* Charts.framework */; };
 		866BFE121EA8F84C002D079E /* BarChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F69BFEB1B2A6B8200FB2CE0 /* BarChartViewController.swift */; };
 		866BFE141EA90AC8002D079E /* ProjectionChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866BFE131EA90AC8002D079E /* ProjectionChartViewController.swift */; };
+		86B2E0581EB7CDCF003349EC /* ToolTip.xib in Resources */ = {isa = PBXBuildFile; fileRef = 86B2E0571EB7CDCF003349EC /* ToolTip.xib */; };
+		86B2E05A1EB7D5AB003349EC /* ToolTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B2E0591EB7D5AB003349EC /* ToolTip.swift */; };
 		86D3C69D1EB11F4500EFD76C /* LabelRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86D3C69C1EB11F4500EFD76C /* LabelRenderer.swift */; };
 /* End PBXBuildFile section */
 
@@ -160,6 +162,8 @@
 		86334B011EA95A590036F349 /* SwiftyJSON.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftyJSON.xcodeproj; path = "../SwiftyJSON-master/SwiftyJSON.xcodeproj"; sourceTree = "<group>"; };
 		866BFDFF1EA8F604002D079E /* Charts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Charts.xcodeproj; path = "../Charts-master/Charts.xcodeproj"; sourceTree = "<group>"; };
 		866BFE131EA90AC8002D079E /* ProjectionChartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectionChartViewController.swift; sourceTree = "<group>"; };
+		86B2E0571EB7CDCF003349EC /* ToolTip.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ToolTip.xib; sourceTree = "<group>"; };
+		86B2E0591EB7D5AB003349EC /* ToolTip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolTip.swift; sourceTree = "<group>"; };
 		86D3C69C1EB11F4500EFD76C /* LabelRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelRenderer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -217,6 +221,8 @@
 				5F69BFF21B2A6B8200FB2CE0 /* LaunchScreen.xib */,
 				5F69BFE71B2A6B8200FB2CE0 /* Supporting Files */,
 				86D3C69C1EB11F4500EFD76C /* LabelRenderer.swift */,
+				86B2E0571EB7CDCF003349EC /* ToolTip.xib */,
+				86B2E0591EB7D5AB003349EC /* ToolTip.swift */,
 			);
 			path = iOSChartsDemo;
 			sourceTree = "<group>";
@@ -442,6 +448,7 @@
 				5F69BFEF1B2A6B8200FB2CE0 /* Main.storyboard in Resources */,
 				5F69BFF41B2A6B8200FB2CE0 /* LaunchScreen.xib in Resources */,
 				5F69BFF11B2A6B8200FB2CE0 /* Images.xcassets in Resources */,
+				86B2E0581EB7CDCF003349EC /* ToolTip.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -462,6 +469,7 @@
 				866BFE141EA90AC8002D079E /* ProjectionChartViewController.swift in Sources */,
 				5F69C00A1B2A6CA200FB2CE0 /* ChartsViewController.swift in Sources */,
 				5F69BFEC1B2A6B8200FB2CE0 /* BarChartViewController.swift in Sources */,
+				86B2E05A1EB7D5AB003349EC /* ToolTip.swift in Sources */,
 				5F69BFEA1B2A6B8200FB2CE0 /* AppDelegate.swift in Sources */,
 				86D3C69D1EB11F4500EFD76C /* LabelRenderer.swift in Sources */,
 			);

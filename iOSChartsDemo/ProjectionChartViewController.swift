@@ -1,79 +1,15 @@
 import UIKit
 import Charts
 import SwiftyJSON
+import CoreGraphics
+import Foundation
+
 
 class ProjectionChartViewController: UIViewController {
     
     @IBOutlet weak var projectionChartView: LineChartView!
     
     var projectionString : String?
-    
-    class TargetMarker : MarkerImage {
-        
-        init(chartView: LineChartView, trans: Transformer) {
-            super.init()
-            self.chartView = chartView
-            self.image = #imageLiteral(resourceName: "TargetShadow")
-            
-            //6plus, 7plus, 6s
-            //self.offset = CGPoint(x: -20, y: -45)
-            
-            //
-        }
-        
-        override func offsetForDrawing(atPoint point: CGPoint) -> CGPoint {
-            var offset = self.offset
-            
-            let chart = self.chartView
-            
-            var size = self.size
-            
-            if size.width == 0.0 && image != nil
-            {
-                size.width = image?.size.width ?? 0.0
-            }
-            if size.height == 0.0 && image != nil
-            {
-                size.height = image?.size.height ?? 0.0
-            }
-            
-//            let chartWidth = chart?.bounds.size.width
-            let chartHeight = chart?.bounds.size.height
-            
-            //Checks the screensize and adjusts the offset accordingly, it appears as though the chart renders in two sizes depending on the device
-            if(Int(chartHeight!) < 220){
-                //6plus, 7plus, 6s
-                offset = CGPoint(x: -20, y: -35)
-            }else {
-                //SE, 5
-                offset = CGPoint(x: -20, y: -45)
-            }
-            
-            let width = size.width
-            let height = size.height
-            
-            if point.x + offset.x < 0.0
-            {
-                offset.x = -point.x
-            }
-            else if chart != nil && point.x + width + offset.x > chart!.bounds.size.width
-            {
-                offset.x = chart!.bounds.size.width - point.x - width
-            }
-            
-            if point.y + offset.y < 0
-            {
-                offset.y = -point.y
-            }
-            else if chart != nil && point.y + height + offset.y > chart!.bounds.size.height
-            {
-                offset.y = chart!.bounds.size.height - point.y - height
-            }
-            
-            return offset
-        }
-    }
-    
     
     //This class is responsible for formatting the values passed into the new yAxis
 //    class ProjectionLabelFormatter: IAxisValueFormatter {
@@ -155,7 +91,7 @@ class ProjectionChartViewController: UIViewController {
         var projectionLabels = [Double].init(repeating: 0, count: (projection.bands?.count)!)
         
         
-        var yearsToGoal = target?.getYearsToGoal()
+        let yearsToGoal = target?.getYearsToGoal()
         
         for b in 0..<projection.bands!.count{
             let band = projection.bands![b]
@@ -216,7 +152,6 @@ class ProjectionChartViewController: UIViewController {
             dataSets.append(targetDataSet)
             highlight = Highlight(x: Double(targetYear), y: Double(targetValue), dataSetIndex: dataSets.index(of: targetDataSet)!)
             
-            
             //labels
             //projectionChartView.rightYAxisRenderer = LabelRender -> need to create a new class that extends YAxisRenderer
         }
@@ -236,12 +171,14 @@ class ProjectionChartViewController: UIViewController {
         projectionChartView.rightYAxisRenderer = LabelRenderer(viewPortHandler: viewPortHandler, yAxis: yAxis, transformer: transformer, entries: projectionLabels)
         
         let targetLumpSum = projection.targetLumpSum!
-        let targetMarker = TargetMarker(chartView: projectionChartView, trans: transformer)
+        
+        let targetMarker = ToolTip.viewFromXib()
+        //if needed can set/modify properties after the view is created (ie. offset, chartView, etc.)
         
         //set target marker
         projectionChartView.marker = targetMarker
         
-        projectionChartView.drawMarkers = true
+        //projectionChartView.drawMarkers = true
         
         //makes marker visible without having to tap the chart
         projectionChartView.highlightValue(highlight, callDelegate: false)
