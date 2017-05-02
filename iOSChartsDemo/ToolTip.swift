@@ -15,6 +15,8 @@ class ToolTip : MarkerView{
     
     override func offsetForDrawing(atPoint point: CGPoint) -> CGPoint {
         
+        //NOTE: the offset for this is incorrect, I had the target marker line up for aesthetics, not for accuracy.
+        //In production it should accurately reflect the accounts target amount
         self.offset = CGPoint(x: -140, y: -60)
         return offset
     }
