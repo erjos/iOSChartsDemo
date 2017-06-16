@@ -16,6 +16,7 @@
 		5F69C00A1B2A6CA200FB2CE0 /* ChartsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F69C0091B2A6CA200FB2CE0 /* ChartsViewController.swift */; };
 		86334B1A1EA95A9F0036F349 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86334B0D1EA95A590036F349 /* SwiftyJSON.framework */; };
 		86334B1B1EA95A9F0036F349 /* SwiftyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 86334B0D1EA95A590036F349 /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		86337AD31EF34AFE008D52AE /* AllocationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86337AD21EF34AFE008D52AE /* AllocationsViewController.swift */; };
 		866BFE081EA8F728002D079E /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 866BFE051EA8F604002D079E /* Charts.framework */; };
 		866BFE091EA8F728002D079E /* Charts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 866BFE051EA8F604002D079E /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		866BFE0D1EA8F801002D079E /* ChartsTests.xctest in Embed PlugIns */ = {isa = PBXBuildFile; fileRef = 866BFE071EA8F604002D079E /* ChartsTests.xctest */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -160,6 +161,7 @@
 		5F69BFFF1B2A6B8300FB2CE0 /* iOSChartsDemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSChartsDemoTests.swift; sourceTree = "<group>"; };
 		5F69C0091B2A6CA200FB2CE0 /* ChartsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartsViewController.swift; sourceTree = "<group>"; };
 		86334B011EA95A590036F349 /* SwiftyJSON.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftyJSON.xcodeproj; path = "../SwiftyJSON-master/SwiftyJSON.xcodeproj"; sourceTree = "<group>"; };
+		86337AD21EF34AFE008D52AE /* AllocationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllocationsViewController.swift; sourceTree = "<group>"; };
 		866BFDFF1EA8F604002D079E /* Charts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Charts.xcodeproj; path = "../Charts-master/Charts.xcodeproj"; sourceTree = "<group>"; };
 		866BFE131EA90AC8002D079E /* ProjectionChartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectionChartViewController.swift; sourceTree = "<group>"; };
 		86B2E0571EB7CDCF003349EC /* ToolTip.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ToolTip.xib; sourceTree = "<group>"; };
@@ -216,6 +218,7 @@
 				5F69BFEB1B2A6B8200FB2CE0 /* BarChartViewController.swift */,
 				5F69C0091B2A6CA200FB2CE0 /* ChartsViewController.swift */,
 				866BFE131EA90AC8002D079E /* ProjectionChartViewController.swift */,
+				86337AD21EF34AFE008D52AE /* AllocationsViewController.swift */,
 				5F69BFED1B2A6B8200FB2CE0 /* Main.storyboard */,
 				5F69BFF01B2A6B8200FB2CE0 /* Images.xcassets */,
 				5F69BFF21B2A6B8200FB2CE0 /* LaunchScreen.xib */,
@@ -470,6 +473,7 @@
 				5F69C00A1B2A6CA200FB2CE0 /* ChartsViewController.swift in Sources */,
 				5F69BFEC1B2A6B8200FB2CE0 /* BarChartViewController.swift in Sources */,
 				86B2E05A1EB7D5AB003349EC /* ToolTip.swift in Sources */,
+				86337AD31EF34AFE008D52AE /* AllocationsViewController.swift in Sources */,
 				5F69BFEA1B2A6B8200FB2CE0 /* AppDelegate.swift in Sources */,
 				86D3C69D1EB11F4500EFD76C /* LabelRenderer.swift in Sources */,
 			);

@@ -57,8 +57,8 @@
                         <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3r1-KR-3k5" customClass="BarChartView" customModule="Charts">
-                                <rect key="frame" x="16" y="113" width="343" height="385"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3r1-KR-3k5" customClass="BarChartView" customModule="Charts">
+                                <rect key="frame" x="16" y="0.0" width="343" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
@@ -79,6 +79,39 @@
             </objects>
             <point key="canvasLocation" x="1786.4000000000001" y="770.46476761619192"/>
         </scene>
+        <!--Allocations View Controller-->
+        <scene sceneID="VHL-W8-dbS">
+            <objects>
+                <viewController id="siJ-8y-10l" customClass="AllocationsViewController" customModule="iOSChartsDemo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="dxN-PD-vSx"/>
+                        <viewControllerLayoutGuide type="bottom" id="2sd-dN-YwU"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="RNs-VF-eHA">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D30-FB-xhu" customClass="PieChartView" customModule="Charts">
+                                <rect key="frame" x="0.0" y="64" width="375" height="375"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="D30-FB-xhu" firstAttribute="leading" secondItem="RNs-VF-eHA" secondAttribute="leading" id="XOj-By-EgM"/>
+                            <constraint firstItem="D30-FB-xhu" firstAttribute="top" secondItem="dxN-PD-vSx" secondAttribute="bottom" id="r8j-Bo-6qy"/>
+                            <constraint firstItem="2sd-dN-YwU" firstAttribute="top" secondItem="D30-FB-xhu" secondAttribute="bottom" constant="228" id="vT9-vn-3jY"/>
+                            <constraint firstAttribute="trailing" secondItem="D30-FB-xhu" secondAttribute="trailing" id="xjI-Zt-q2u"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="allocationsChartView" destination="D30-FB-xhu" id="v7f-fI-Ac3"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ara-1k-KoU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2538.4000000000001" y="1150.9745127436283"/>
+        </scene>
         <!--Charts View Controller-->
         <scene sceneID="5lS-Hu-cvw">
             <objects>
@@ -91,12 +124,12 @@
                         <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lkd-cD-xsO" userLabel="Pie Chart View">
-                                <rect key="frame" x="0.0" y="268" width="600" height="268"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lkd-cD-xsO" userLabel="Pie Chart View">
+                                <rect key="frame" x="0.0" y="301.5" width="375" height="301.5"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2y5-fU-w8q" userLabel="Line Chart View">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="268"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2y5-fU-w8q" userLabel="Line Chart View">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="301.5"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                         </subviews>
@@ -149,11 +182,31 @@
                                             <segue destination="jM0-JT-Qmy" kind="show" id="CVw-Xk-Kem"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="hz5-PS-O88" style="IBUITableViewCellStyleDefault" id="4vf-lE-9PN">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="vfW-vl-98s" style="IBUITableViewCellStyleDefault" id="FXR-KK-I4o">
                                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FXR-KK-I4o" id="18L-im-GeT">
+                                            <rect key="frame" x="0.0" y="0.0" width="342" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Allocations Chart" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vfW-vl-98s">
+                                                    <rect key="frame" x="15" y="0.0" width="325" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="siJ-8y-10l" kind="show" id="dJT-If-WRv"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="hz5-PS-O88" style="IBUITableViewCellStyleDefault" id="4vf-lE-9PN">
+                                        <rect key="frame" x="0.0" y="88" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4vf-lE-9PN" id="AeD-PK-R71">
-                                            <rect key="frame" x="0.0" y="0.0" width="342" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Bar Chart" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hz5-PS-O88">
@@ -170,10 +223,10 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="c07-v8-Okb" style="IBUITableViewCellStyleDefault" id="EeY-7g-mRv">
-                                        <rect key="frame" x="0.0" y="88" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="132" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="EeY-7g-mRv" id="wNZ-pu-bqS">
-                                            <rect key="frame" x="0.0" y="0.0" width="342" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Other Charts" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="c07-v8-Okb">
