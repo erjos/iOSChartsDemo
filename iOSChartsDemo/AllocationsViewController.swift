@@ -50,7 +50,7 @@ class PortfolioBreakdown {
         sectors = Category.init(json["sectors"])
         positions = Category.init(json["positions"])
         regions = Category.init(json["regions"])
-        stockTypes = Category.init(json["regions"])
+        stockTypes = Category.init(json["stockTypes"])
     }
 }
 
@@ -58,12 +58,21 @@ class Category {
     var categoryTitle: String?
     var entryTitle: String?
     var totalAmount: EntityValue?
-    var portfolioBreakdown: [BreakdownItem]?
+    var portfolioBreakdowns: [BreakdownItem]?
     
     init(_ json: JSON){
         categoryTitle = json["categoryTitle"].string
         entryTitle = json["entryTitle"].string
         totalAmount = EntityValue.init(json["totalAmount"])
+        
+        let jsonArray = json["portfolioBreakdowns"].array
+        
+        portfolioBreakdowns = [BreakdownItem]()
+        
+        for breakdown in jsonArray!{
+            let breakdown = BreakdownItem.init(json: breakdown)
+            portfolioBreakdowns?.append(breakdown)
+        }
     }
 }
 
@@ -72,6 +81,13 @@ class BreakdownItem {
     var shortName: String?
     var percentage: EntityValue?
     var amount: EntityValue?
+    
+    init(json: JSON){
+        name = json["name"].string
+        shortName = json["shortName"].string
+        percentage = EntityValue.init(json["percentage"])
+        amount = EntityValue.init(json["amount"])
+    }
 }
 
 class EntityValue {
