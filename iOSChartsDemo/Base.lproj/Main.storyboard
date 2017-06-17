@@ -98,6 +98,10 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="PYJ-TZ-2tP">
                                 <rect key="frame" x="16" y="447" width="343" height="200"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="siJ-8y-10l" id="nGI-nx-TDp"/>
+                                    <outlet property="delegate" destination="siJ-8y-10l" id="G14-X5-Gig"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -114,6 +118,7 @@
                     </view>
                     <connections>
                         <outlet property="allocationsChartView" destination="D30-FB-xhu" id="v7f-fI-Ac3"/>
+                        <outlet property="tableView" destination="PYJ-TZ-2tP" id="5j1-ad-42W"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ara-1k-KoU" userLabel="First Responder" sceneMemberID="firstResponder"/>

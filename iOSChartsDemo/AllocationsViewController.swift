@@ -25,6 +25,7 @@ class AllocationsViewController: UIViewController {
     
     
     @IBOutlet weak var allocationsChartView: PieChartView!
+    @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         
@@ -33,6 +34,8 @@ class AllocationsViewController: UIViewController {
         portfolioBreakdown = PortfolioBreakdown.init(json: json)
         
         setAllocationsChart(portfolioBreakdown: portfolioBreakdown)
+        
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
     }
     
@@ -107,7 +110,9 @@ extension AllocationsViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell")
+        cell?.textLabel?.text = portfolioBreakdown.positions?.portfolioBreakdowns?[indexPath.row].name
+        return cell!
     }
 }
 
