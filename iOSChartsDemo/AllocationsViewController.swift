@@ -10,23 +10,29 @@ class AllocationsViewController: UIViewController {
     @IBOutlet weak var allocationsChartView: PieChartView!
     
     override func viewDidLoad() {
-        setAllocationsChart()
+       
         
         let json = JSON.init(parseJSON: JsonString)
         
         let portfolioBreakdown = PortfolioBreakdown.init(json: json)
         
+         setAllocationsChart(portfolioBreakdown: portfolioBreakdown)
+        
     }
     
-    func setAllocationsChart(){
+    func setAllocationsChart(portfolioBreakdown: PortfolioBreakdown){
         
-        let arrayOfDataSet = [IChartDataSet]()
+        var allocationsEntries = [PieChartDataEntry]()
         
-        //These entries are constructed using the RowItems from a list of PorfolioBreakdown objects ->uses a stream and filter to map to the list
-        let allocationsEntries = [PieChartDataEntry]()
+        for breakdown in (portfolioBreakdown.netAssetAllocation?.portfolioBreakdowns)!{
+            //These entries can also be initialized with a label
+            let entry = PieChartDataEntry(value: (breakdown.percentage?.value)!)
+            allocationsEntries.append(entry)
+        }
         
-        // haven't found this yet in POC yet
-        let allocationsDataSet = PieChartDataSet(values: allocationsEntries, label: "Herroo")
+        //let arrayOfDataSet = [IChartDataSet]()
+        
+        let allocationsDataSet = PieChartDataSet(values: allocationsEntries, label: "chart")
         
         //TODO: use below to pass in the array of colors that we will use for the wheel
         //allocationsDataSet.setColors(<#T##colors: [NSUIColor]##[NSUIColor]#>, alpha: <#T##CGFloat#>)
