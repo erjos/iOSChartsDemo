@@ -37,6 +37,9 @@ class AllocationsViewController: UIViewController {
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
+        allocationsChartView.centerText = "HERRRO"
+        allocationsChartView.chartDescription?.enabled = false
+        allocationsChartView.legend.enabled = false
     }
     
     func setAllocationsChart(portfolioBreakdown: PortfolioBreakdown){
@@ -114,10 +117,18 @@ extension AllocationsViewController: UITableViewDataSource {
         cell?.textLabel?.text = portfolioBreakdown.positions?.portfolioBreakdowns?[indexPath.row].name
         return cell!
     }
+    
 }
 
 extension AllocationsViewController: UITableViewDelegate{
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        //this deselects the slice if one was previously selected
+        //allocationsChartView.highlightValue(nil)
+        //this programmatically selects index  of the pie chart ** I don't think it initiates a callback to the delegate
+        allocationsChartView.highlightValue(Highlight(x: Double(indexPath.row), dataSetIndex: 0, stackIndex: 0))
+    }
 }
 
 class PortfolioBreakdown {
