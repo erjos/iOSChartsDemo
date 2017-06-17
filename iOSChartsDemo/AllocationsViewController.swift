@@ -3,18 +3,19 @@ import Charts
 import SwiftyJSON
 
 class AllocationsViewController: UIViewController {
-    let color1 = NSUIColor(colorLiteralRed: 42/255, green: 132/255, blue: 236/255, alpha: 255/255)
-    let color2 = NSUIColor(colorLiteralRed: 37/255, green: 119/255, blue: 212/255, alpha: 255/255)
-    let color3 = NSUIColor(colorLiteralRed: 29/255, green: 92/255, blue: 164/255, alpha: 255/255)
-    let color4 = NSUIColor(colorLiteralRed: 0/255, green: 120/255, blue: 150/255, alpha: 255/255)
-    let color5 = NSUIColor(colorLiteralRed: 0/255, green: 154/255, blue: 193/255, alpha: 255/255)
-    let color6 = NSUIColor(colorLiteralRed: 0/255, green: 172/255, blue: 215/255, alpha: 255/255)
-    let color7 = NSUIColor(colorLiteralRed: 76/255, green: 196/255, blue: 226/255, alpha: 255/255)
-    let color8 = NSUIColor(colorLiteralRed: 178/255, green: 229/255, blue: 242/255, alpha: 255/255)
-    let color9 = NSUIColor(colorLiteralRed: 210/255, green: 198/255, blue: 235/255, alpha: 255/255)
-    let color10 = NSUIColor(colorLiteralRed: 183/255, green: 163/255, blue: 235/255, alpha: 222/255)
-    let color11 = NSUIColor(colorLiteralRed: 152/255, green: 124/255, blue: 209/255, alpha: 222/255)
-    let color12 = NSUIColor(colorLiteralRed: 122/255, green: 87/255, blue: 196/255, alpha: 222/255)
+    let color0 = NSUIColor(colorLiteralRed: 42/255, green: 132/255, blue: 236/255, alpha: 255/255)
+    let color1 = NSUIColor(colorLiteralRed: 37/255, green: 119/255, blue: 212/255, alpha: 255/255)
+    let color2 = NSUIColor(colorLiteralRed: 29/255, green: 92/255, blue: 164/255, alpha: 255/255)
+    let color3 = NSUIColor(colorLiteralRed: 0/255, green: 120/255, blue: 150/255, alpha: 255/255)
+    let color4 = NSUIColor(colorLiteralRed: 0/255, green: 154/255, blue: 193/255, alpha: 255/255)
+    let color5 = NSUIColor(colorLiteralRed: 0/255, green: 172/255, blue: 215/255, alpha: 255/255)
+    let color6 = NSUIColor(colorLiteralRed: 76/255, green: 196/255, blue: 226/255, alpha: 255/255)
+    let color7 = NSUIColor(colorLiteralRed: 178/255, green: 229/255, blue: 242/255, alpha: 255/255)
+    let color8 = NSUIColor(colorLiteralRed: 210/255, green: 198/255, blue: 235/255, alpha: 255/255)
+    let color9 = NSUIColor(colorLiteralRed: 183/255, green: 163/255, blue: 235/255, alpha: 222/255)
+    let color10 = NSUIColor(colorLiteralRed: 152/255, green: 124/255, blue: 209/255, alpha: 222/255)
+    let color11 = NSUIColor(colorLiteralRed: 122/255, green: 87/255, blue: 196/255, alpha: 222/255)
+    let color12 = NSUIColor(colorLiteralRed: 108/255, green: 68/255, blue: 190/255, alpha: 222/255)
     
     
     
@@ -38,6 +39,40 @@ class AllocationsViewController: UIViewController {
         
         var allocationsEntries = [PieChartDataEntry]()
         
+        let breakdownCount = portfolioBreakdown.positions?.portfolioBreakdowns?.count
+        
+        let colorChoices = [color0, color1, color2, color3, color4, color5, color6, color7, color8, color9, color10, color11, color12]
+        
+        
+        var colorsUsed = [NSUIColor]()
+        var insertIndex = 0
+        var counter = 0
+        
+        for i in 1..<breakdownCount! {
+            
+            var colorIndex = 1
+            
+            if(i <= 6){
+                colorIndex = i * 2
+                let color = colorChoices[colorIndex]
+                colorsUsed.append(color)
+            }
+            
+            if(i > 6 && i <= 12){
+                colorIndex = (i - 6) + counter
+                let color = colorChoices[colorIndex]
+                colorsUsed.insert(color, at: insertIndex)
+                counter += 1
+                insertIndex += 2
+            }
+            
+//            if(i == 12){
+//                colorIndex = 0
+//                let color = colorChoices[colorIndex]
+//                colorsUsed.insert(color, at: 0)
+//            }
+        }
+        
         for breakdown in (portfolioBreakdown.positions?.portfolioBreakdowns)!{
             //These entries can also be initialized with a label
             let entry = PieChartDataEntry(value: (breakdown.percentage?.value)!)
@@ -50,10 +85,8 @@ class AllocationsViewController: UIViewController {
         
         allocationsDataSet.sliceSpace = 1
         
-        let colors = [color1, color2, color3, color4, color5, color6, color7, color8, color9, color10, color11, color12]
-        
         //TODO: use below to pass in the array of colors that we will use for the wheel
-        allocationsDataSet.setColors(colors, alpha: 255/255)
+        allocationsDataSet.setColors(colorsUsed, alpha: 255/255)
         //allocationsDataSet.setColor(color1)
     
         //TODO: can also initialize the data with an array of dataSets *** I wonder what this does - check it out later
