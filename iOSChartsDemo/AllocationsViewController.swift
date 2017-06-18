@@ -30,6 +30,7 @@ class AllocationsViewController: UIViewController {
     override func viewDidLoad() {
         let json = JSON.init(parseJSON: JsonString)
         portfolioBreakdown = PortfolioBreakdown.init(json: json)
+        allocationsChartView.delegate = self
         setAllocationsChart(portfolioBreakdown: portfolioBreakdown)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
     }
@@ -89,6 +90,7 @@ class AllocationsViewController: UIViewController {
         allocationsChartView.centerText = "Allocations Chart \n Data Coming Soon"
         allocationsChartView.chartDescription?.enabled = false
         allocationsChartView.legend.enabled = false
+        allocationsChartView.animate(xAxisDuration: 1.0)
     }
 }
 
@@ -113,6 +115,16 @@ extension AllocationsViewController: UITableViewDelegate{
         
         //programmatically selects slice at the corresponding index path
         allocationsChartView.highlightValue(Highlight(x: Double(indexPath.row), dataSetIndex: 0, stackIndex: 0))
+    }
+}
+
+extension AllocationsViewController: ChartViewDelegate{
+    func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
+        //someting happens
+        let chartIndex = Int(highlight.x)
+        let indexPath = IndexPath(row: chartIndex, section: 0)
+        tableView.selectRow(at: indexPath, animated: true, scrollPosition: UITableViewScrollPosition(rawValue: 0)!)
+        tableView.scrollToRow(at: indexPath, at: UITableViewScrollPosition(rawValue: 0)!, animated: true)
     }
 }
 
