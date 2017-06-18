@@ -115,15 +115,23 @@ extension AllocationsViewController: UITableViewDelegate{
         
         //programmatically selects slice at the corresponding index path
         allocationsChartView.highlightValue(Highlight(x: Double(indexPath.row), dataSetIndex: 0, stackIndex: 0))
+        allocationsChartView.centerText = portfolioBreakdown.positions?.portfolioBreakdowns?[indexPath.row].percentage?.formattedValue
     }
 }
 
 extension AllocationsViewController: ChartViewDelegate{
     func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
-        //someting happens
+        
+        
+        
         let chartIndex = Int(highlight.x)
+        
+        allocationsChartView.centerText = portfolioBreakdown.positions?.portfolioBreakdowns?[chartIndex].percentage?.formattedValue
+        
         let indexPath = IndexPath(row: chartIndex, section: 0)
         tableView.selectRow(at: indexPath, animated: true, scrollPosition: UITableViewScrollPosition(rawValue: 0)!)
+        
+        //we may not need this scroll function in the live app if the specs handle the behavior differently
         tableView.scrollToRow(at: indexPath, at: UITableViewScrollPosition(rawValue: 0)!, animated: true)
     }
 }
